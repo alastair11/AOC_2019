@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.awt.geom.Point2D;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -25,6 +22,7 @@ public class Asteroid implements Comparable<Asteroid> {
     private final Map<Double, TreeSet<Asteroid>> bearingMap = new TreeMap<>();
 
     private final Comparator<Asteroid> distanceComparator = (o1, o2) -> (int) (distanceTo(o1) - distanceTo(o2));
+    private final Map<Asteroid, Double> distanceCache = new HashMap<>();
 
     @Override
     public int compareTo(Asteroid o) {
@@ -48,9 +46,17 @@ public class Asteroid implements Comparable<Asteroid> {
     }
 
     private double distanceTo(Asteroid a2) {
-        double x = getLocation().getX() - a2.getLocation().getX();
-        double y = getLocation().getY() - a2.getLocation().getY();
-        return Math.sqrt(x * x + y * y);
+        Double distance = distanceCache.get(a2);
+
+        if (distance == null) {
+            double x = getLocation().getX() - a2.getLocation().getX();
+            double y = getLocation().getY() - a2.getLocation().getY();
+            distance = Math.sqrt(x * x + y * y);
+            distanceCache.put(a2, distance);
+            a2.getDistanceCache().put(this, distance);
+        }
+
+        return distance;
     }
 
     @Override
