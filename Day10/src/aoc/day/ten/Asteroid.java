@@ -1,3 +1,5 @@
+package aoc.day.ten;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +51,7 @@ public class Asteroid implements Comparable<Asteroid> {
 
     @Override
     public String toString() {
-        return "Asteroid{" +
+        return "aoc.day.ten.Asteroid{" +
                 "Number In View=" + bearingMap.size() +
                 ", location=" + location +
                 '}';
