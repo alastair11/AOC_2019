@@ -30,6 +30,8 @@ public class Part2Tests {
         Asteroid lastAsteroid = part2.destroyAsteroids("./puzzle.txt", 200);
 
         System.out.println(lastAsteroid);
+        Assertions.assertEquals(new Point2D.Double(11, 10), lastAsteroid.getLocation());
+        Assertions.assertEquals(1110, (lastAsteroid.getLocation().getX() * 100) + lastAsteroid.getLocation().getY());
         System.out.println((lastAsteroid.getLocation().getX() * 100) + lastAsteroid.getLocation().getY());
     }
 }
