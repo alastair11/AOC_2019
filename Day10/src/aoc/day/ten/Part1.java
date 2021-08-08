@@ -12,6 +12,12 @@ import java.util.List;
 
 public class Part1 {
 
+    /**
+     * Find the best asteroid by seeing which one has the greatest number of unique bearings (to other asteroids)
+     *
+     * @param filename input asteroid map file name
+     * @return Best Asteroid
+     */
     public Asteroid calculateBestAsteroid(String filename) {
         List<Asteroid> asteroids = asteroidMapper(filename);
 

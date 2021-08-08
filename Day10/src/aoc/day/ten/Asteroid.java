@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.awt.geom.Point2D;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -17,10 +18,13 @@ public class Asteroid implements Comparable<Asteroid> {
     private final Point2D location;
 
     /**
-     * An Ordered Map of bearings to set of asteroids in order of their closeness
+     * An Ordered Map of bearings to set of asteroids in order of their closeness.
+     * Closer Asteroids will be first in the TreeSet.
      * Bearing is in degrees, a bearing of 0 is straight up, bearings increase in a clockwise direction.
      */
     private final Map<Double, TreeSet<Asteroid>> bearingMap = new TreeMap<>();
+
+    private final Comparator<Asteroid> distanceComparator = (o1, o2) -> (int) (distanceTo(o1) - distanceTo(o2));
 
     @Override
     public int compareTo(Asteroid o) {
@@ -36,7 +40,7 @@ public class Asteroid implements Comparable<Asteroid> {
         TreeSet<Asteroid> asteroids = bearingMap.get(bearing);
 
         if (asteroids == null) {
-            asteroids = new TreeSet<>((o1, o2) -> (int) (distanceTo(o1) - distanceTo(o2)));
+            asteroids = new TreeSet<>(distanceComparator);
             bearingMap.put(bearing, asteroids);
         }
 
